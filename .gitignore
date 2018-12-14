@@ -1,4 +1,6 @@
-"db.sqlite3" 
-"superlists/__pycache__"  
-"lists/__pychache__" 
-"*.pyc" 
+db.sqlite3
+superlists/__pycache__
+**/__pychache__
+*.pyc
+**/migrations 
+.idea
