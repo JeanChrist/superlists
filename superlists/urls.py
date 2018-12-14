@@ -20,4 +20,5 @@ from lists import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('my_view/', views.my_view, name='my_view'),
+    path('', views.home_page, name='home_page'),
 ]
