@@ -14,3 +14,9 @@ class HomePageTest(TestCase):
     def test_uses_home_template(self):
         response = self.client.get(self.url)
         self.assertTemplateUsed(response, 'home.html')
+
+    def test_can_post_and_save_a_item(self):
+        data = {'item_text': 'A new test item'}
+        response = self.client.post(self.url, data=data)
+        self.assertIn(data['item_text'], response.content.decode())
+        self.assertTemplateUsed(response, 'home.html')
