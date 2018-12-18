@@ -5,11 +5,6 @@ from .models import Item, List
 # Create your views here.
 
 
-def my_view(request):
-    output = _("Welcome to my site.")
-    return HttpResponse(output)
-
-
 def home_page(request):
     return render(request, 'home.html')
     # return HttpResponse('<html><title>To-Do lists</title></html>')
