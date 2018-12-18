@@ -4,6 +4,7 @@ from selenium.common.exceptions import WebDriverException
 import unittest
 import time
 from django.test import LiveServerTestCase
+from django.contrib.staticfiles.testing import StaticLiveServerTestCase
 
 
 MAX_WAIT = 10
@@ -22,7 +23,7 @@ def need_wait_decorator(func):
     return wrap
 
 
-class NewVisitorTest(LiveServerTestCase):
+class NewVisitorTest(StaticLiveServerTestCase):
     @property
     def new_browser(self):
         return webdriver.Chrome(r'D:\WorkSpace\chromedriver.exe')
