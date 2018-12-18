@@ -2,7 +2,8 @@ from django.db import models
 
 
 class List(models.Model):
-    pass
+    def get_absolute_url(self):
+        return f'/lists/{self.pk}/'
 
 
 # Create your models here.
