@@ -4,3 +4,5 @@ superlists/__pycache__
 *.pyc
 **/migrations 
 .idea
+.coverage 
+htmlcov/ 
