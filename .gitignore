@@ -2,7 +2,6 @@ db.sqlite3
 superlists/__pycache__
 **/__pychache__
 *.pyc
-**/migrations 
 .idea
 .coverage 
 htmlcov/ 

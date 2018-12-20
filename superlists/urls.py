@@ -18,7 +18,7 @@ from django.urls import path, include
 from lists import views, urls as list_urls
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # path('admin/', admin.site.urls),
     path('', views.home_page, name='home_page'),
     path('lists/', include(list_urls)),
 
