@@ -7,3 +7,4 @@ superlists/__pycache__
 .coverage 
 htmlcov/ 
 static/ 
+debug.log
