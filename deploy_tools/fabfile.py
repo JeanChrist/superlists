@@ -35,6 +35,9 @@ def _update_settings(source_folder, site_name):
     settings_path = source_folder + '/superlists/settings.py'
     sed(settings_path, "DEBUG = True", "DEBUG = False")
     sed(settings_path,
+        'STATIC_ROOT =.+$',
+        f"STATIC_ROOT = os.path.abspath(os.path.join(BASE_DIR, '../static/'))")
+    sed(settings_path,
         'ALLOWED_HOSTS =.+$',
         f'ALLOWED_HOSTS = ["{site_name}"]')
     secret_key_file = source_folder + '/superlists/secret_key.py'
