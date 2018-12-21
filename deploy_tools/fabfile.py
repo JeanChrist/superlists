@@ -7,7 +7,11 @@ REPO_URL = 'https://github.com/jeanchrist/superlists.git'
 
 
 def deploy():
-    site_folder = f'/var/www/{env.host}'
+    try:
+        site_dir = env.site_dir
+    except AttributeError:
+        site_dir = env.host
+    site_folder = f'/var/www/{site_dir}'
     source_folder = site_folder + '/source'
     _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
@@ -19,7 +23,7 @@ def deploy():
 
 def _create_directory_structure_if_necessary(site_folder):
     for subfolder in ('database', 'static', 'virtualenv', 'source'):
-        sudo(f'mkdir -p {site_folder}/{subfolder}')
+        run(f'mkdir -p {site_folder}/{subfolder}')
 
 
 def _get_latest_source(source_folder):
