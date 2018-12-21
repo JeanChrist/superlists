@@ -27,3 +27,10 @@ eg, on Ubuntu:
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ├── source
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; ├── static
 &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp; └── virtualenv
+/var/www
+├── SITENAME
+│   ├── database
+│   ├── source
+│   ├── static
+│   └── virtualenv
+
