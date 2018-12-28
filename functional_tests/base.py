@@ -20,10 +20,12 @@ def need_wait_decorator(func):
                 if time.time() - start_time > MAX_WAIT:
                     raise e
                 time.sleep(0.5)
+
     return wrap
 
 
 class FunctionalTest(StaticLiveServerTestCase):
+
     @property
     def new_browser(self):
         return webdriver.Chrome(r'D:\WorkSpace\chromedriver.exe')
