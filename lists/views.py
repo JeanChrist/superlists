@@ -1,13 +1,15 @@
 from django.shortcuts import render, redirect
 from django.utils.translation import ugettext as _
 from django.http import HttpResponse
-from .models import Item, List
 from django.core.exceptions import ValidationError
+from .models import Item, List
+from .forms import ItemForm
+
 # Create your views here.
 
 
 def home_page(request):
-    return render(request, 'home.html')
+    return render(request, 'home.html', {'form': ItemForm()})
     # return HttpResponse('<html><title>To-Do lists</title></html>')
 
 

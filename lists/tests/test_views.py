@@ -1,5 +1,6 @@
 from django.test import TestCase
 from ..models import Item, List
+from ..forms import ItemForm
 from django.utils.html import escape
 
 
@@ -14,14 +15,9 @@ class HomePageTest(TestCase):
         response = self.client.get(self.url)
         self.assertTemplateUsed(response, self.template_name)
 
-    #
-    # def test_displays_all_list_items(self):
-    #     text1, text2 = 'itemey 1', 'itemey 2'
-    #     Item.objects.create(text=text1)
-    #     Item.objects.create(text=text2)
-    #     response = self.client.get(self.url)
-    #     self.assertIn(text1, response.content.decode())
-    #     self.assertIn(text2, response.content.decode())
+    def test_home_page_uses_item_form(self):
+        response = self.client.get('/')
+        self.assertIsInstance(response.context['form'], ItemForm)
 
 
 class ListViewTest(TestCase):
