@@ -57,6 +57,27 @@ class ListViewTest(TestCase):
         self.assertNotContains(response, other_text1)
         self.assertNotContains(response, other_text2)
 
+    def test_can_save_a_POST_request_to_an_existing_list(self):
+        # other_list = self.model.objects.create()
+        # correct_list = self.model.objects.create()
+        data = {'item_text': 'A new item for an existing list'}
+        self.client.post(
+            self.url,
+            data=data
+        )
+        self.assertEqual(Item.objects.count(), 1)
+        new_item = Item.objects.first()
+        self.assertEqual(new_item.text, data['item_text'])
+        self.assertEqual(new_item.list, self.list)
+
+    def test_redirects_to_list_view(self):
+
+        response = self.client.post(
+            self.url,
+            data={'item_text': 'A new item for an existing list'}
+        )
+        self.assertRedirects(response, self.list.get_absolute_url())
+
 
 class NewListTest(TestCase):
     def setUp(self):
@@ -90,31 +111,3 @@ class NewListTest(TestCase):
 
         self.assertEqual(List.objects.count(), 0)
         self.assertEqual(Item.objects.count(), 0)
-
-
-class NewItemTest(TestCase):
-    def setUp(self):
-        # self.model = Item
-        self.list = List.objects.create()
-        self.url = f'/lists/{self.list.id}/add_item'
-
-    def test_can_save_a_POST_request_to_an_existing_list(self):
-        # other_list = self.model.objects.create()
-        # correct_list = self.model.objects.create()
-        data = {'item_text': 'A new item for an existing list'}
-        self.client.post(
-            self.url,
-            data=data
-        )
-        self.assertEqual(Item.objects.count(), 1)
-        new_item = Item.objects.first()
-        self.assertEqual(new_item.text, data['item_text'])
-        self.assertEqual(new_item.list, self.list)
-
-    def test_redirects_to_list_view(self):
-
-        response = self.client.post(
-            self.url,
-            data={'item_text': 'A new item for an existing list'}
-        )
-        self.assertRedirects(response, self.list.get_absolute_url())
