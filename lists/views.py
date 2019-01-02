@@ -20,7 +20,7 @@ def view_list(request, pk):
             item = Item(text=request.POST['item_text'], list=list_obj)
             item.full_clean()
             item.save()
-            return redirect(list_obj.get_absolute_url())
+            return redirect(list_obj)
         except ValidationError:
             error = "You can't have an empty list item"
         # Item.objects.create(text=request.POST['item_text'], list=list_obj)
@@ -40,4 +40,4 @@ def create_list(request):
         error = "You can't have an empty list item"
 
         return render(request, 'home.html', {'error': error})
-    return redirect(list_.get_absolute_url())
+    return redirect(list_)
