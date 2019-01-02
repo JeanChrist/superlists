@@ -13,11 +13,20 @@ def home_page(request):
 
 def view_list(request, pk):
     list_obj = List.objects.get(pk=pk)
+    error = None
     if request.method == 'POST':
-        Item.objects.create(text=request.POST['item_text'], list=list_obj)
-        return redirect(list_obj.get_absolute_url())
+
+        try:
+            item = Item(text=request.POST['item_text'], list=list_obj)
+            item.full_clean()
+            item.save()
+            return redirect(list_obj.get_absolute_url())
+        except ValidationError:
+            error = "You can't have an empty list item"
+        # Item.objects.create(text=request.POST['item_text'], list=list_obj)
+        # return redirect(list_obj.get_absolute_url())
     # items = Item.objects.filter(list=list_obj)
-    return render(request, 'list.html', {'list': list_obj})
+    return render(request, 'list.html', {'list': list_obj, 'error': error})
 
 
 def create_list(request):
