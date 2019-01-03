@@ -3,7 +3,7 @@ from django.utils.translation import ugettext as _
 from django.http import HttpResponse
 from django.core.exceptions import ValidationError
 from .models import Item, List
-from .forms import ItemForm, EMPTY_ITEM_ERROR
+from .forms import ItemForm, EMPTY_ITEM_ERROR, ExistingListItemForm
 
 # Create your views here.
 
@@ -15,11 +15,11 @@ def home_page(request):
 
 def view_list(request, pk):
     list_obj = List.objects.get(pk=pk)
-    form = ItemForm()
+    form = ExistingListItemForm(list_obj)
     if request.method == 'POST':
-        form = ItemForm(data=request.POST)
+        form = ExistingListItemForm(list_obj, data=request.POST)
         if form.is_valid():
-            Item.objects.create(text=request.POST['text'], list=list_obj)
+            form.save()
             return redirect(list_obj)
 
     return render(request, 'list.html', {'list': list_obj, "form": form})
@@ -28,7 +28,8 @@ def view_list(request, pk):
 def create_list(request):
     form = ItemForm(data=request.POST)
     if form.is_valid():
-        list_ = List.objects.create()
-        Item.objects.create(text=request.POST['text'], list=list_)
-        return redirect(list_)
+
+        list_obj = List.objects.create()
+        form.save(list_obj)
+        return redirect(list_obj)
     return render(request, 'home.html', {"form": form})

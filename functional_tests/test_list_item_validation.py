@@ -1,7 +1,7 @@
 from unittest import skip
 from .base import FunctionalTest, need_wait_decorator
 from selenium.webdriver.common.keys import Keys
-from lists.forms import EMPTY_ITEM_ERROR
+from lists.forms import EMPTY_ITEM_ERROR, DUPLICATE_ITEM_ERROR
 
 
 class ItemValidationTest(FunctionalTest):
@@ -42,3 +42,20 @@ class ItemValidationTest(FunctionalTest):
         self.get_item_input_box().send_keys(Keys.ENTER)
         self.check_for_row_in_list_table('1: Buy milk')
         self.check_for_row_in_list_table('2: Make tea')
+
+    def test_cannot_add_duplicate_items(self):
+
+        # Edith goes to the home page and starts a new list
+        self.browser.get(self.live_server_url)
+        text = 'Buy wellies'
+        self.get_item_input_box().send_keys(text)
+        self.get_item_input_box().send_keys(Keys.ENTER)
+        self.check_for_row_in_list_table(f'1: {text}')
+        # She accidentally tries to enter a duplicate item
+        self.get_item_input_box().send_keys(text)
+        self.get_item_input_box().send_keys(Keys.ENTER)
+        # She sees a helpful error message
+        self.wait_for(lambda: self.assertEqual(
+            self.browser.find_element_by_css_selector('.has-error').text,
+            DUPLICATE_ITEM_ERROR
+        ))
