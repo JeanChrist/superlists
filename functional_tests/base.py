@@ -41,15 +41,9 @@ class FunctionalTest(StaticLiveServerTestCase):
         self.browser.quit()
 
     @staticmethod
+    @need_wait_decorator
     def wait_for(fn):
-        start_time = time.time()
-        while True:
-            try:
-                return fn()
-            except (AssertionError, WebDriverException) as e:
-                if time.time() - start_time > MAX_WAIT:
-                    raise e
-                time.sleep(0.5)
+        return fn()
 
     @need_wait_decorator
     def check_for_row_in_list_table(self, row_text):
