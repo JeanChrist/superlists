@@ -5,5 +5,5 @@ superlists/__pycache__
 .idea
 .coverage 
 htmlcov/ 
-/static/ 
+/static/
 debug.log
